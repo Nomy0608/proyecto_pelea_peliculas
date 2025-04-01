@@ -1,19 +1,111 @@
-const fetchData= async(searchTerm) => {
-    const response = await axios.get('http://omdbapi.com/', {
-        params: {
-            apikey:'30668e4a',
-            s: 'avengers'
+// const fetchData= async(searchTerm) => {
+//     const response = await axios.get('http://omdbapi.com/', {
+//         params: {
+//             apikey:'30668e4a',
+//             s: 'avengers'
 
-        }
-    })
-    if(response.data.Error){
-        return[]
-    }
+//         }
+//     })
+//     if(response.data.Error){
+//         return[]
+//     }
 
-    console.log(response.data.Search)
-}
+//     console.log(response.data.Search)
+// }
 
 //fetchData()
+
+autoCompleteConfig = {
+    renderOption(movie){
+        const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster
+        return`
+            <img src="${imgSrc}" />
+            ${movie.Title} (${movie.Year})
+        `
+    },
+    inputValue(movie){
+        return movie.Title
+    },
+    async fetchData(searchTerm){
+        apiMovieURL = 'http://www.omdapi.com/'
+        const response = await axios.get(apiMovieURL, {
+            params: {
+                apikey: '',
+                s: searchTerm
+            }
+        })
+        if(response.data.Error){
+            return []
+        }
+        console.log(response.data)
+        return response.data.Search
+    }
+}
+
+createAutoComplete({
+    ...autoCompleteConfig,
+    root: document.querySelector('#left-autocomplete'),
+    onOptionSelect(Movie){
+        document.querySelector('.tutorial').classList.add('is.hidden')
+        onMovieSelect(Movie, document.querySelector('#left-summary'),'left')
+    }
+})
+
+createAutoComplete({
+    ...autoCompleteConfig,
+    root: document.querySelector('#right-autocomplete'),
+    onOptionSelect(Movie){
+        document.querySelector('.tutorial').classList.add('is.hidden')
+        onMovieSelect(Movie, document.querySelector('#right-summary'),'right')
+    }
+})
+
+//Crear 2 variables para leftMovie y rightMovie
+let leftMovie
+let rightMovie
+
+const onMovieSelect = async(movie, summaryElement, side) =>{
+    const response = await axios.get('http://www.omdbapi.com/',{
+        params:{
+            apikey; '',
+            i: movie.imdbID
+        }
+    })
+    console.log(response.data)
+    summaryElement.innerHTML = movieTemplate(response.data)
+    //Preguntamos, que lado es?
+    if(side === 'left'){
+        leftMovie = response.data
+    }else{
+        rightMovie = response.data
+    }
+    //Preguntamos si tenemos ambos lados
+    if(leftMovie && rightMovie){
+        //Ejecutamos la funcion comparacion
+        runComparasion()
+    }
+}
+
+const runComparasion = () =>{
+    console.log('Comparacion de peliculas')
+    const leftSideStats = document.querySelector('#left-summary .notificacion')
+    const rightSideStats = document.querySelector('#right-summary .notificacion')
+
+    leftSideStats.forEach((leftStat, index) =>{
+        const rightStat = rightSideStats(index)
+        const leftSideValue = parseInt(leftStat.dataset.value)
+        const rightSideValue = parseInt(rightStat.dataset.value)
+
+        if(rightSideValue>leftSideValue){
+            leftStat.classList.remove('is-primary')
+            leftStat.classList.add('is-danger')
+        }else{
+            rightStat.classList.remove('is-primary')
+            rightStat.classList.add('is-danger')
+        }
+    })
+}
+
 const root = document.querySelector('.autocomplete')
 root.innerHTML = `
 <label><b>Busqueda de Peliculas</b></label>
