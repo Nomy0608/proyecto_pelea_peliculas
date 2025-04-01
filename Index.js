@@ -64,7 +64,7 @@ createAutoComplete({
 let leftMovie
 let rightMovie
 
-const onMoviesSelect = async(movie, summaryElement, side) =>{
+const onMovieSelect = async(movie, summaryElement, side) =>{
     const response = await axios.get('https://www.omdbapi.com/',{
         params:{
             apikey: '30668e4a',
@@ -104,6 +104,27 @@ const runComparasion = () =>{
             rightStat.classList.add('is-danger')
         }
     })
+}
+
+const movieTemplates = (movieDetails) => {
+    //Transformar a numeros los string que llevan los datos
+    const dollars = parseInt(movieDetails.BoxOffice.replace(/\$/g,'').replace(/,/g,''))
+    console.log(dollars)
+    const metascore = parseInt(movieDetails.metascore)
+    const imdbRating = parseFloat(movieDetails.imdbRating)
+    const imdbVotes = parseInt(movieDetails.imdbVotes.replace(/,/g,''))
+    console.log(metascore, imdbRating, imdbVotes)
+    const awards = movieDetails.awards.split('').reduce((prev, word) => {
+        const value = parseInt(word)
+
+        if(isNaN(value)){
+            return prev
+        }else{
+            return prev + value
+        }
+        
+    },0)
+    console.log('Awards', awards)
 }
 
 const root = document.querySelector('.autocomplete')
@@ -168,7 +189,7 @@ document.addEventListener('click', event => {
     }
 })
 
-const onMovieSelect = async(movie) =>{
+const onMoviesSelect = async(movie) =>{
     const response = await axios.get('https://www.omdbapi.com/', {
         params: {
             apikey:'30668e4a',
