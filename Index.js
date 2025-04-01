@@ -1,5 +1,5 @@
 // const fetchData= async(searchTerm) => {
-//     const response = await axios.get('http://omdbapi.com/', {
+//     const response = await axios.get('https://omdbapi.com/', {
 //         params: {
 //             apikey:'30668e4a',
 //             s: 'avengers'
@@ -27,10 +27,10 @@ autoCompleteConfig = {
         return movie.Title
     },
     async fetchData(searchTerm){
-        apiMovieURL = 'http://www.omdapi.com/'
+        apiMovieURL = 'https://www.omdbapi.com/'
         const response = await axios.get(apiMovieURL, {
             params: {
-                apikey: '',
+                apikey:'30668e4a',
                 s: searchTerm
             }
         })
@@ -64,10 +64,10 @@ createAutoComplete({
 let leftMovie
 let rightMovie
 
-const onMovieSelect = async(movie, summaryElement, side) =>{
-    const response = await axios.get('http://www.omdbapi.com/',{
+const onMoviesSelect = async(movie, summaryElement, side) =>{
+    const response = await axios.get('https://www.omdbapi.com/',{
         params:{
-            apikey; '',
+            apikey: '30668e4a',
             i: movie.imdbID
         }
     })
@@ -169,9 +169,9 @@ document.addEventListener('click', event => {
 })
 
 const onMovieSelect = async(movie) =>{
-    const response = await axios.get('http://www.omdbapi.com/', {
+    const response = await axios.get('https://www.omdbapi.com/', {
         params: {
-            apikey:'',
+            apikey:'30668e4a',
             i: movie.imdbID
         }
     })
