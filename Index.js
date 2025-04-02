@@ -125,6 +125,44 @@ const movieTemplates = (movieDetails) => {
         
     },0)
     console.log('Awards', awards)
+    //Agregar la propiedad data-value a cada elemento del template
+
+    return`
+    <article class= "media">
+        <figure class="media-left">
+        <p class="image">
+            <img src="${movieDetails.Poster}">
+        </p>
+    </figure>
+    <div class="media-content">
+        <div class="content">
+            <h1>${movieDetails.Title}</h1>
+            <h4>${movieDetails.Genre}</h4>
+            <p>${movieDetails.Plot}</p>
+        </div>
+    </div>
+    </article>
+    <article data-values=${awards} class="notification is-primary">
+        <p class="title">${movieDetails.awards}</p>
+        <p class="subtitle">Awards</p>
+    </article>
+    <article data-values=${dollars} class="notification is-primary">
+        <p class="title">${movieDetails.BoxOffice}</p>
+        <p class="subtitle">Box Office</p>
+    </article>
+    <article data-values=${metascore} class="notification is-primary">
+        <p class="title">${movieDetails.metascore}</p>
+        <p class="subtitle">Metascore</p>
+    </article>
+    <article data-values=${imdbRating} class="notification is-primary">
+        <p class="title">${movieDetails.imdbRating}</p>
+        <p class="subtitle">IMDB Rating</p>
+    </article>
+    <article data-values=${imdbVotes} class="notification is-primary">
+        <p class="title">${movieDetails.imdbVotes}</p>
+        <p class="subtitle">IMDB Votes</p>
+    </article>
+    `
 }
 
 const root = document.querySelector('.autocomplete')
