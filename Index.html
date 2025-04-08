@@ -10,7 +10,7 @@
     <title>Pelea de peliculas</title>
 </head>
 <body>
-    <section class="hero is-primary is-bold">
+   <section class="hero is-primary is-bold">
      <div class="hero-body">
         <div class="container">
             <h1 class="title">
@@ -21,11 +21,24 @@
             </h1>
         </div>
      </div>
-     </section>
-     <div class="container">
-        <div class="autocomplete"></div>
-     </div>
-
-     <script src="Index.js"></script>
+   </section>
+   <div class="container">
+    <div class="columns">
+        <div class="column">
+            <div id="left-autocomplete"></div>
+            <div id="left-summary"></div>
+        </div>
+        <div class="column">
+            <div id="right-autocomplete"></div>
+            <div id="right-summary"></div>
+    </div>
+   </div>
+   <div class="column is-half notification is-dark tutorial">
+    <h1 class="title">Busca peliculas de ambos lados</h1>
+    <p class="subtitle">Nosotros te diremos cual es la mejor!</p>
+        </div>
+    </div>
+    <script src="autocomplete.js"></script>
+    <script src="Index.js"></script>
 </body>
 </html>
